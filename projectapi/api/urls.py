@@ -3,6 +3,8 @@ from .import views
 
 
 urlpatterns = [
-    path('contact-list/', views.Showall , name = 'contact-list'),
     path('',views.apiOverview, name ='apiOverview'),
+    path('contact-list/', views.Showall , name = 'contact-list'),
+    path('contact-detail/<int:pk>', views.ViewContact , name = 'contact-detail'),
+    path('contact-create/', views.CreateContact , name = 'contact-create'),
 ]

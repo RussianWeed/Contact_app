@@ -48,18 +48,10 @@ def CreateContact(request):
 # create an update view
 @api_view(['POST'])
 def UpdateContact(request):
-    # contact = Contact.objects.get(Adhar_card=pk)
+ 
     serializer = ContactSerializer(data=request.data)
-    # adhar_card = serializer.validated_data['Adhar_card']
-    # contact = Contact.objects.get(Adhar_card=adhar_card)
-    # serializer = ContactSerializer(instance=contact, data=request.data)
 
     if serializer.is_valid():
-        # print(json.dumps(serializer.data))
-        # p = json.dumps(serializer.data)
-        # contact = Contact.objects.get(Adhar_card=int(p['Adhar_card']))
-        # serializer = ContactSerializer(instance=contact, data=request.data)
-        # serializer.save()
 
         adhar_card = serializer.validated_data['Adhar_card']
         contact = Contact.objects.get(Adhar_card=adhar_card)

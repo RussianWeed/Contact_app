@@ -1,11 +1,14 @@
 package com.devking.contact_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -16,12 +19,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    public ArrayList<Model_class> dataset;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView text_view = findViewById(R.id.tv);
+
+        RecyclerView recyclerView = findViewById(R.id.recylerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        dataset = new ArrayList<>();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(dataset);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
 
         String url = "http://10.0.2.2:9000/api/";
 
@@ -39,21 +51,22 @@ public class MainActivity extends AppCompatActivity {
         contact_list.enqueue(new Callback<List<Model_class>>() {
             @Override
             public void onResponse(Call<List<Model_class>> call, Response<List<Model_class>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Model_class> data = response.body();
-                    for (Model_class model : data) {
-                        text_view.append("Name: " + model.getName() + "\n");
-                    }
-                } else {
-                    Log.e("API Response", "Unsuccessful response: " + response.message());
+                if(response.isSuccessful() && response.body() != null){
+                    dataset= (ArrayList<Model_class>) response.body();
+                    adapter.updateData(dataset);
                 }
+                else {
+                    Log.e("API Call", "Failed to get data: " + response.message());
+                }
+
             }
 
             @Override
             public void onFailure(Call<List<Model_class>> call, Throwable t) {
-                Log.e("API Response", "Failed to fetch data: " + t.getMessage());
+                Log.e("API Call", "Failed: " + t.getMessage());
             }
         });
 
     }
+
 }

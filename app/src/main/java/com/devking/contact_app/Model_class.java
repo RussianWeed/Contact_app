@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 public class Model_class {
 
     @SerializedName("Phn_number")
-    int Phn_number;
+    Integer Phn_number;
 
     @SerializedName("Adhar_card")
-    int Adhar_card;
+    Integer Adhar_card;
 
     @SerializedName("Name")
     String Name;
 
     public Model_class() {
-        // Required empty constructor
+
     }
 
     public Model_class(int phn_number, int adhar_card, String name) {

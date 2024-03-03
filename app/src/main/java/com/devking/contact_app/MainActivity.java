@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ClickLIstner {
 
     public ArrayList<Model_class> dataset;
 
@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dataset = new ArrayList<>();
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(dataset);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(dataset, this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -67,6 +66,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void onItemClick(int position) {
+        if (position != RecyclerView.NO_POSITION){
+            Intent intent = new Intent(this,MainActivity2.class);
+            Model_class current_item = dataset.get(position);
+
+
+            ArrayList<String> contact_details = new ArrayList<>();
+            contact_details.add(current_item.getName());
+            contact_details.add(current_item.getAdhar_card().toString());
+            contact_details.add(current_item.getPhn_number().toString());
+
+
+            intent.putStringArrayListExtra("contact_details",contact_details);
+            startActivity(intent);
+
+        }
     }
 
 }

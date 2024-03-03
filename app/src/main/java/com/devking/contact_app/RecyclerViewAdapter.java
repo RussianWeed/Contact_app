@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.View_Holder> {
 
     ArrayList<Model_class> data;
+    ClickLIstner clickLIstner;
 
-    public RecyclerViewAdapter(ArrayList<Model_class> data) {
+    public RecyclerViewAdapter(ArrayList<Model_class> data , ClickLIstner clickLIstner) {
         this.data = data;
+        this.clickLIstner = clickLIstner;
     }
 
     @NonNull
@@ -51,7 +53,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 name = itemView.findViewById(R.id.name);
                 phn_number = itemView.findViewById(R.id.phn_number);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        clickLIstner.onItemClick(getAdapterPosition());
+                    }
+                });
         }
+
     }
 
     public void updateData(ArrayList<Model_class> newData) {

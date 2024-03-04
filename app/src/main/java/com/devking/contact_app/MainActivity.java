@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +21,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements ClickLIstner {
 
+
     public ArrayList<Model_class> dataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageView add_contact = findViewById(R.id.addContact);
+
+        add_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              create_contact();
+            }
+        });
+
 
 
         RecyclerView recyclerView = findViewById(R.id.recylerview);
@@ -67,6 +80,12 @@ public class MainActivity extends AppCompatActivity implements ClickLIstner {
         });
 
     }
+
+    private void create_contact() {
+        Intent intent = new Intent(this,Create_Contact.class);
+        startActivity(intent);
+    }
+
     public void onItemClick(int position) {
         if (position != RecyclerView.NO_POSITION){
             Intent intent = new Intent(this,MainActivity2.class);
@@ -84,5 +103,6 @@ public class MainActivity extends AppCompatActivity implements ClickLIstner {
 
         }
     }
+
 
 }

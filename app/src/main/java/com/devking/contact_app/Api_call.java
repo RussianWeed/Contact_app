@@ -21,4 +21,8 @@ public interface Api_call {
     @POST("create/")
     Call<Model_class> add_data (@Field("Name") String Name , @Field("Phn_number") String Phn_number, @Field("Adhar_card") String Adhar_card);
 
+
+    @FormUrlEncoded
+    @POST("update/")
+    Call<Model_class> update_data (@Field("Name") String Name , @Field("Phn_number") String Phn_number, @Field("Adhar_card") String Adhar_card);
 }

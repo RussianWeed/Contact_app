@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements ClickLIstner {
 
 
+    private static final int REFRESH_DELAY = 2000;
     public ArrayList<Model_class> dataset;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,23 @@ public class MainActivity extends AppCompatActivity implements ClickLIstner {
         setContentView(R.layout.activity_main);
 
         ImageView add_contact = findViewById(R.id.addContact);
+        ImageView refresh =findViewById(R.id.refresh);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recreate(); // Refresh the activity
+            }
+        }, REFRESH_DELAY);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
 
         add_contact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements ClickLIstner {
 
             ArrayList<String> contact_details = new ArrayList<>();
             contact_details.add(current_item.getName());
-            contact_details.add(current_item.getAdhar_card().toString());
             contact_details.add(current_item.getPhn_number().toString());
+            contact_details.add(current_item.getAdhar_card().toString());
 
 
             intent.putStringArrayListExtra("contact_details",contact_details);

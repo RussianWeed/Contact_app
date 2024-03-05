@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Contact_app"
         tools:targetApi="31">
         <activity
+            android:name=".Update_Contact"
+            android:exported="false" />
+        <activity
             android:name=".Create_Contact"
             android:exported="false" />
         <activity
